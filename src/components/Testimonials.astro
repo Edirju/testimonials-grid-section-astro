@@ -1,6 +1,59 @@
 ---
-
+import datos from "#data/testimonials.json";
+import bgPattern from "../assets/images/bg-pattern-quotation.svg";
 ---
 
+<section
+  class="my-8 mx-4 grid
+  grid-cols-[minmax(min-content,345px)] grid-rows-[repeat(5,min-content)]
+  [grid-template-areas:'a1''a2''a3''a4''a5'] gap-y-[min(5vw,2rem)] gap-x-0
+  sm:grid-cols-[repeat(2,minmax(min-content,250px))] sm:grid-rows-[repeat(4,min-content)]
+  sm:[grid-template-areas:'a1_a1_a1_a1''a2_a2_a3_a3''a4_a4_a4_a4''a5_a5_a5_a5'] sm:gap-[min(1.7vw,1.5rem)]
+  lg:grid-cols-[repeat(4,minmax(min-content,250px))] lg:grid-rows-[repeat(2,min-content)] lg:gap-[min(1.7vw,1.5rem)] lg:[grid-template-areas:'a1_a1_a2_a5''a3_a4_a4_a5']"
+>
+  {
+    datos.map((item) => (
+      <div
+        class={`card ${item.customBg} ${item.customText} ${item.hasBgImage ? "has-bg" : ""} flex flex-col gap-4 rounded-[10px] max-w-full h-full shadow-[10px_20px_60px_rgb(0_0_0/0.2)] py-[min(7vw,1.6rem)] px-[min(8vw,2rem)] lg:px-[min(2vw,2rem)] lg:py-[min(2vw,1.5rem)]`}
+        style={{ gridArea: item.gridArea }}
+      >
+        <div class="flex items-center gap-2.5">
+          <img
+            src={item.image}
+            alt={item.name}
+            class={`block my-auto mx-0 size-[min(10vw,35px)] rounded-full border-2 ${item.customBr} object-contain `}
+          />
+          <div class="flex flex-col">
+            <h1 class={`text-[clamp(0.6rem,4vw,0.9rem)] font-medium leading-tight whitespace-nowrap`}>
+              {item.name}
+            </h1>
+            <p class="text-[clamp(0.6rem,3vw,0.7rem)] font-medium opacity-80">{item.role}</p>
+          </div>
+        </div>
 
+        <p class="font-semibold text-[clamp(0.6rem,5.8vw,1.4rem)] tracking-normal leading-tight  lg:z-10">
+          {item.title}
+        </p>
 
+        <p class="text-[13px] font-medium text-pretty opacity-80 tracking-tight lg:leading-[calc(clamp(0.6rem,2vw,0.8rem)*1.5)]">
+          " {item.quote} "
+        </p>
+      </div>
+    ))
+  }
+</section>
+
+<style define:vars={{ patternUrl: `url(${bgPattern.src})` }}>
+  .card {
+    position: relative;
+  }
+
+  @media (width >= 1024px) {
+    .has-bg {
+      background-image: var(--patternUrl);
+      background-repeat: no-repeat;
+      background-position: top 0 right 10%;
+      background-size: 20%;
+    }
+  }
+</style>
